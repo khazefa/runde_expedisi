@@ -10,10 +10,11 @@
         throw new \Exception("Remote file inclusion attempt!");
     }
 
-    $page_files = array( 
+    $page_files = array(
         'data-ekspedisi'=>'modules/dir-ekspedisi/v_list.php',
         'data-barang'=>'modules/dir-barang/v_list.php',
         'data-principal'=>'modules/dir-principal/v_list.php',
+        'data-biaya-kirim'=>'modules/dir-biaya-kirim/v_list.php',
         'user-list'=>'modules/users/v_list.php',
         'sales-report'=>'modules/reports/v_orders.php',
         'dashboard'=>'modules/dashboard.php'

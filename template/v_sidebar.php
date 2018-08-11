@@ -20,6 +20,7 @@
 			<li><a href="?page=data-principal"><em class="fa fa-tag">&nbsp;</em> Data Principal</a></li>
 			<li><a href="?page=data-barang"><em class="fa fa-tags">&nbsp;</em> Data Barang</a></li>
 			<li><a href="?page=data-ekspedisi"><em class="fa fa-truck">&nbsp;</em> Data Ekspedisi</a></li>
+			<li><a href="?page=data-biaya-kirim"><em class="fa fa-list-alt">&nbsp;</em> Data Biaya Kirim</a></li>
 			<!--
 			<li class="parent "><a data-toggle="collapse" href="#sub-item-1">
 				<em class="fa fa-tags">&nbsp;</em> Items <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span>

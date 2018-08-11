@@ -34,6 +34,7 @@
                     ['para', ['ul', 'ol', 'paragraph']]
                   ]
             });
+            load_kabupaten();
 	});
 	</script>
 
