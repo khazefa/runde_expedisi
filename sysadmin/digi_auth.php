@@ -1,5 +1,5 @@
 <?php
-require("includes/constants.php");
+require("../includes/constants.php");
 
 function anti_injection($data){
     $filter = stripslashes(strip_tags(htmlspecialchars($data,ENT_QUOTES)));
@@ -16,7 +16,7 @@ if (!ctype_alnum($username) OR !ctype_alnum($pass)){
     exit(1); // EXIT_ERROR
 }else{
     
-    require_once('includes/class.db.php');
+    require_once('../includes/class.db.php');
 
     $database = DB::getInstance();
 

@@ -7,8 +7,8 @@ if(!isset($isLoggedIn) || $isLoggedIn != TRUE){
     echo 'You dont have permissions to access this page! <a href="javascript:history.back()">Back</a>';
     exit(1); // EXIT_ERROR
 }else{
-    require("../../includes/constants.php");
-    require_once("../../includes/class.db.php");
+    require("../../../includes/constants.php");
+    require_once("../../../includes/class.db.php");
     $database = DB::getInstance();
 
     $getpage = htmlspecialchars($_GET["page"], ENT_QUOTES, 'UTF-8');

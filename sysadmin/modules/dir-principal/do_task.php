@@ -15,53 +15,54 @@ if(!isset($isLoggedIn) || $isLoggedIn != TRUE){
     $getact = htmlspecialchars($_GET["act"], ENT_QUOTES, 'UTF-8');
 
     // Save data
-    if ($getpage == "courier-list" AND $getact == "save"){
-        $fname = isset($_POST["fname"]) ? filter_var($_POST['fname'], FILTER_SANITIZE_STRING) : null;
-        $fdest = isset($_POST["fdest"]) ? filter_var($_POST['fdest'], FILTER_SANITIZE_STRING) : null;
-        $fcost = isset($_POST["fcost"]) ? filter_var($_POST['fcost'], FILTER_SANITIZE_NUMBER_INT) : null;
+    if ($getpage == "data-principal" AND $getact == "save"){
+        $fkode = isset($_POST["fkode"]) ? filter_var($_POST['fkode'], FILTER_SANITIZE_STRING) : null;
+        $fnama = isset($_POST["fnama"]) ? filter_var($_POST['fnama'], FILTER_SANITIZE_STRING) : null;
+        $falias = isset($_POST["falias"]) ? filter_var($_POST['falias'], FILTER_SANITIZE_STRING) : null;
         
         $arrValue = array(
-            'shipping_courier' => $fname,
-            'shipping_dest' => $fdest,
-            'shipping_cost' => $fcost
+            'principal_kode' => $fkode,
+            'principal_nama' => $fnama,
+            'principal_alias' => $falias
         );
-        $add_query = $database->insert( 'shipping', $arrValue );
+        $add_query = $database->insert( 'principal', $arrValue );
         if( $add_query )
         {
             header('location:../../?page='.$getpage);
         }
     }
     // Update data
-    elseif ($getpage == "courier-list" AND $getact == "update"){
+    elseif ($getpage == "data-principal" AND $getact == "update"){
         $fid = isset($_POST["fid"]) ? filter_var($_POST['fid'], FILTER_SANITIZE_NUMBER_INT) : 0;
-        $fcost = isset($_POST["fcost"]) ? filter_var($_POST['fcost'], FILTER_SANITIZE_NUMBER_INT) : null;
+        $fnama = isset($_POST["fnama"]) ? filter_var($_POST['fnama'], FILTER_SANITIZE_STRING) : null;
+        $falias = isset($_POST["falias"]) ? filter_var($_POST['falias'], FILTER_SANITIZE_STRING) : null;
         
         $update = array(
-            'shipping_cost' => $fcost
+            'principal_nama' => $fnama,
+            'principal_alias' => $falias
         );
         //Add the WHERE clauses
         $where_clause = array(
-            'shipping_id' => $fid
+            'principal_id' => $fid
         );
-        $updated = $database->update( 'shipping', $update, $where_clause, 1 );
+        $updated = $database->update( 'principal', $update, $where_clause, 1 );
         if( $updated )
         {
             header('location:../../?page='.$getpage);
         }
     }
     // Delete data
-    elseif ($getpage == "courier-list" AND $getact == "delete"){
+    elseif ($getpage == "data-principal" AND $getact == "delete"){
         $key = htmlspecialchars($_GET["key"], ENT_QUOTES, 'UTF-8');
         $where_clause = array(
-            'shipping_id' => $key
+            'principal_id' => $key
         );
         //Query delete
-        $deleted = $database->delete( 'shipping', $where_clause);
+        $deleted = $database->delete( 'principal', $where_clause);
         if( $deleted )
         {
             header('location:../../?page='.$getpage);
         }
     }
-
 }
 ?>

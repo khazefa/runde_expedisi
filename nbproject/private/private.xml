@@ -2,6 +2,11 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/D:/laragon/www/runde_expedisi/modules/dashboard.php</file>
+            <file>file:/D:/laragon/www/runde_expedisi/template/v_content.php</file>
+            <file>file:/D:/laragon/www/runde_expedisi/template/v_sidebar.php</file>
+            <file>file:/D:/laragon/www/runde_expedisi/template/v_header.php</file>
+        </group>
     </open-files>
 </project-private>

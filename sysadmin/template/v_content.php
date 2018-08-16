@@ -16,7 +16,6 @@
         'data-principal'=>'modules/dir-principal/v_list.php',
         'data-biaya-kirim'=>'modules/dir-biaya-kirim/v_list.php',
         'user-list'=>'modules/users/v_list.php',
-        'sales-report'=>'modules/reports/v_orders.php',
         'dashboard'=>'modules/dashboard.php'
     );
 
