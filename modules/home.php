@@ -72,6 +72,7 @@
                             </table>
                         </div>
                     </div>
+                    <hr>
                     <div class="row">
                         <div class="col-lg-9 mx-auto">
                             <div class="card">
@@ -83,13 +84,32 @@
                                         <div class="form-row">
                                             <label class="col-md-2">Dimensi:</label>
                                             <div class="form-group col-md-2">
-                                                <input type="text" name="fdim_p" id="fdim_p" class="form-control" placeholder="Panjang">
+                                                <input type="number" name="fdim_p" id="fdim_p" class="form-control" min="0" placeholder="Panjang">
                                             </div>
                                             <div class="form-group col-md-2">
-                                                <input type="text" name="fdim_l" id="fdim_l" class="form-control" placeholder="Lebar">
+                                                <input type="number" name="fdim_l" id="fdim_l" class="form-control" min="0" placeholder="Lebar">
                                             </div>
                                             <div class="form-group col-md-2">
-                                                <input type="text" name="fdim_t" id="fdim_t" class="form-control" placeholder="Tinggi">
+                                                <input type="number" name="fdim_t" id="fdim_t" class="form-control" min="0" placeholder="Tinggi">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <label class="col-md-2">Ekspedisi:</label>
+                                            <div class="form-group col-md-3">
+                                                <select name="fekspedisi" id="fekspedisi" class="form-control">
+                                                    <option value="">Pilih Ekspedisi</option>
+                                                    <?php
+                                                        $query = "SELECT * FROM ekspedisi ORDER BY ekspedisi_nama";
+                                                        $results = $database->get_results( $query );
+                                                        foreach( $results as $row )
+                                                        {
+                                                            $id = (int) nohtml($row["ekspedisi_id"]);
+                                                            $nama = nohtml($row["ekspedisi_nama"]);
+                                                            
+                                                            echo '<option value="'.$id.'">'.$nama.'</option>';
+                                                        }
+                                                    ?>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -112,27 +132,8 @@
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <label class="col-md-2">Ekspedisi:</label>
-                                            <div class="form-group col-md-6">
-                                                <select name="fekspedisi" id="fekspedisi" class="form-control">
-                                                    <option value="">Pilih Ekspedisi</option>
-                                                    <?php
-                                                        $query = "SELECT * FROM ekspedisi ORDER BY ekspedisi_nama";
-                                                        $results = $database->get_results( $query );
-                                                        foreach( $results as $row )
-                                                        {
-                                                            $id = (int) nohtml($row["ekspedisi_id"]);
-                                                            $nama = nohtml($row["ekspedisi_nama"]);
-                                                            
-                                                            echo '<option value="'.$id.'">'.$nama.'</option>';
-                                                        }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
                                             <div class="form-group col-md-2 mx-auto">
-                                                <button class="btn btn-success">Tampilkan Tarif</button>
+                                                <button id="btn_tarif1" class="btn btn-success">Tampilkan Tarif</button>
                                             </div>
                                             <div class="form-group col-md-12">
                                                 <table id="grid_tarif1" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
@@ -146,13 +147,6 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td>AAA</td>
-                                                            <td>AAA</td>
-                                                            <td>AAA</td>
-                                                            <td>AAA</td>
-                                                            <td>AAA</td>
-                                                        </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -160,7 +154,7 @@
                                     </form>
                                 </div> 
                                 <div class="card-footer">
-                                    Footer
+                                    <small>**)Tarif belum termasuk PPN</small>
                                 </div>
                             </div>
                         </div>
@@ -183,3 +177,96 @@
         </div>
       </div>
     </section>
+
+<script type="text/javascript">
+    function logic_tarif1(){
+        var table = $('#grid_brg').DataTable({
+            processing: true,
+            order: [[ 2, "asc" ]], 
+            columnDefs: [{ 
+                orderable: false,
+                targets: [ 0 ]
+            }],
+        });
+
+        var table_tarif1 = $('#grid_tarif1').DataTable({
+            dom: "<'row'<'col-md-12'B>>" + "<'row'<'col-md-12'tr>>" + "<'row'<'col-md-12'p>>",
+            destroy: true,
+            stateSave: false,
+            deferRender: true,
+            processing: true,
+            buttons: [
+                {
+                    extend: 'copy',
+                    text: '<i class="fa fa-copy"></i>',
+                    titleAttr: 'Copy',
+//                    exportOptions: { columns: ':visible:not(:last-child)' }, //last column has the action types detail/edit/delete
+                    exportOptions: {
+                        modifier: {
+                            page: 'current'
+                        }
+                    },
+                    footer:false
+                }, 
+                {
+                    extend: 'excel',
+                    text: '<i class="fa fa-file-excel-o"></i>',
+                    titleAttr: 'Excel',
+//                    exportOptions: { columns: ':visible:not(:last-child)' }, //last column has the action types detail/edit/delete
+                    exportOptions: {
+                        modifier: {
+                            page: 'current'
+                        }
+                    },
+                    footer:false
+                },
+                {
+                    extend: 'pdf',
+                    text: '<i class="fa fa-file-pdf-o"></i>',
+                    titleAttr: 'PDF',
+//                    exportOptions: { columns: ':visible:not(:last-child)' }, //last column has the action types detail/edit/delete
+                    exportOptions: {
+                        modifier: {
+                            page: 'current'
+                        }
+                    },
+                    footer:false
+                }, 
+                {
+                    extend: 'excel',
+                    text: '<i class="fa fa-file-excel-o"></i> All Page',
+                    titleAttr: 'Excel All Page',
+//                    exportOptions: { columns: ':visible:not(:last-child)' }, //last column has the action types detail/edit/delete
+                    footer:false
+                }
+            ],
+            ajax: {                
+                url: 'json_rsc/ajaxData.php?act=get_tarif',
+                type: 'GET',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                dataType: 'JSON',
+                contentType:"application/json",
+                data: function(d){
+                    d.fdim_p = $('#fdim_p').val();
+                    d.fdim_l = $('#fdim_l').val();
+                    d.fdim_t = $('#fdim_t').val();
+                    d.fekspedisi = $('#fekspedisi').val();
+                    d.ftujuan = $('#ftujuan').val();
+                }
+            },
+            columns: [
+                { "data": 'ekspedisi' },
+                { "data": 'tujuan' },
+                { "data": 'via_udara' },
+                { "data": 'via_darat' },
+                { "data": 'via_laut' },
+            ],
+            order: [[ 0, "asc" ]],
+        });
+        
+        $("#btn_tarif1").on("click", function(e){
+            e.preventDefault();
+            table_tarif1.ajax.reload();
+        });
+    }
+</script>

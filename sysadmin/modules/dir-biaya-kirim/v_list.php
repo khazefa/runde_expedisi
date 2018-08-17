@@ -271,7 +271,7 @@ break;
             if(idProv){
                 $.ajax({
                     type:'GET',
-                    url:'json_rsc/ajaxData.php?act=get_kabupaten',
+                    url:'../json_rsc/ajaxData.php?act=get_kabupaten',
                     data:'key='+idProv,
                     success:function(html){
                         $('#fkabupaten').html(html);
