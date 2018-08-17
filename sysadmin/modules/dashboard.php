@@ -9,19 +9,18 @@ if(!isset($isLoggedIn) || $isLoggedIn != TRUE){
 }else{
     $pagetitle = "Dashboard";
 
-	/**
-    $query_o = "SELECT order_id FROM orders WHERE DATE(order_date) = CURDATE() AND order_status = 'invoiced'";
-    $num_o = (int)$database->num_rows( $query_o );
-
-    $query_py = "SELECT payment_id FROM payment WHERE DATE(created_date) = CURDATE() AND payment_status = 'pending'";
-    $num_py = (int)$database->num_rows( $query_py );
-
-    $query_m = "SELECT customer_id FROM customers";
+//    $query_o = "SELECT order_id FROM orders WHERE DATE(order_date) = CURDATE() AND order_status = 'invoiced'";
+//    $num_o = (int)$database->num_rows( $query_o );
+//
+//    $query_py = "SELECT payment_id FROM payment WHERE DATE(created_date) = CURDATE() AND payment_status = 'pending'";
+//    $num_py = (int)$database->num_rows( $query_py );
+//
+    $query_m = "SELECT brg_id FROM barang";
     $num_m = (int)$database->num_rows( $query_m );
-
-    $query_p = "SELECT product_id FROM products WHERE product_stock <> 0";
+//
+    $query_p = "SELECT ekspedisi_id FROM ekspedisi";
     $num_p = (int)$database->num_rows( $query_p );
-	*/
+
 ?>
 <div class="row">
     <ol class="breadcrumb">
@@ -42,21 +41,21 @@ if(!isset($isLoggedIn) || $isLoggedIn != TRUE){
                 <div class="row">
                         <div class="col-xs-6 col-md-6 col-lg-6 no-padding">
                                 <div class="panel panel-orange panel-widget border-right">
-                                        <div class="row no-padding"><em class="fa fa-xl fa-users color-teal"></em>
-                                                <div class="large">
-													<?php echo 0;//$num_m;?>
-												</div>
-                                                <div class="text-muted">Total Users</div>
+                                        <div class="row no-padding"><em class="fa fa-xl fa-tags color-teal"></em>
+                                            <div class="large">
+                                                <?php echo $num_m;?>
+                                            </div>
+                                            <div class="text-muted">Total Barang</div>
                                         </div>
                                 </div>
                         </div>
                         <div class="col-xs-6 col-md-6 col-lg-6 no-padding">
                                 <div class="panel panel-red panel-widget ">
-                                        <div class="row no-padding"><em class="fa fa-xl fa-tags color-red"></em>
-                                                <div class="large">
-													<?php echo 0;//$num_p;?>
-												</div>
-                                                <div class="text-muted">Total Pricelist</div>
+                                        <div class="row no-padding"><em class="fa fa-xl fa-truck color-red"></em>
+                                            <div class="large">
+                                                <?php echo $num_p;?>
+                                            </div>
+                                            <div class="text-muted">Total Ekspedisi</div>
                                         </div>
                                 </div>
                         </div>
@@ -65,45 +64,11 @@ if(!isset($isLoggedIn) || $isLoggedIn != TRUE){
 
 <div class="row">
     <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">New Shipping</div>
+        <div class="panel panel-primary">
+            <div class="panel-heading"><?php echo WEB_TITLE;?></div>
             <div class="panel-body">
-                <table id="example" class="table table-striped table-bordered" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Aksi</th>
-                        <th>Kota Tujuan</th>
-                        <th>Armada</th>
-                        <th>Dimensi</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-					/**
-                        $query = "SELECT o.order_id, o.order_uniqid, o.order_date, o.order_subtotal, o.order_status, c.customer_name "
-                                . "FROM orders AS o INNER JOIN customers AS c ON o.customer_uniqid = c.customer_uniqid "
-                                . "WHERE DATE(order_date) = CURDATE() AND order_status = 'invoiced' ORDER BY order_id DESC";
-                        $results = $database->get_results( $query );
-                        $no = 1;
-                        foreach( $results as $row )
-                        {
-                            echo "<tr>";
-                                echo "<td>
-                                        <a href='?page=customer-orders&act=info&key=$row[order_uniqid]'><i class='fa fa-eye'></i> View</a>
-                                    </td>";
-                                echo "<td>#$row[order_id]</td>";
-                                echo "<td>$row[customer_name]</td>";
-                                echo "<td>". tgl_indo($row[order_date]) ."</td>";
-                                echo "<td>RP. ". format_IDR($row[order_subtotal]) ."</td>";
-                                echo "<td>". strtoupper($row[order_status]) ."</td>";
-                            echo "</tr>";
-                            $no++;
-                        }
-						*/
-                    ?>
-                </tbody>
-                </table>
+                <p>Selamat datang di halaman admin, harap pergunakan 
+                    fitur-fitur pada menu-menu yang ada di sebelah kiri untuk mengelola aplikasi.</p>
             </div>
         </div>
     </div>
