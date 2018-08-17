@@ -11,69 +11,160 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#registered">Registered</a>
+                    <a class="nav-link active" data-toggle="tab" href="#registered">Registered Goods</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#unregistered">Unregistered</a>
+                    <a class="nav-link" data-toggle="tab" href="#unregistered">Unregistered Goods</a>
                 </li>
             </ul>
 
             <!-- Tab panes -->
             <div class="tab-content">
                 <div class="tab-pane container active" id="registered">
-                    <p>Anda dapat menghitung biaya pengiriman berdasarkan informasi dimensi pada data barang yang anda cari.</p>
-                    <form id="frm_reg" method="POST" action="#">
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <table id="grid_brg" class="table table-striped table-bordered" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>&nbsp;</th>
-                                            <th>Principal</th>
-                                            <th>Kode Brg</th>
-                                            <th>Nama Brg</th>
-                                            <th>Harga (Rp)</th>
-                                            <th>Berat (Kg)</th>
-                                            <th>P</th>
-                                            <th>L</th>
-                                            <th>T</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php
-                                        $query = "SELECT p.principal_nama, b.brg_kode, b.brg_nama, b.brg_hrg, b.brg_berat, "
-                                                . "b.brg_dim_p, b.brg_dim_l, b.brg_dim_t FROM barang AS b "
-                                                . "INNER JOIN principal AS p ON b.principal_id = p.principal_id";
-                                        $results = $database->get_results( $query );
-                                        foreach( $results as $row )
-                                        {
-                                            $principal = nohtml($row["principal_nama"]);
-                                            $kode = nohtml($row["brg_kode"]);
-                                            $nama = nohtml($row["brg_nama"]);
-                                            $harga = format_IDR($row["brg_hrg"]);
-                                            $berat = $row["brg_berat"];
-                                            $dim_p = (int)nohtml($row["brg_dim_p"]);                                            
-                                            $dim_l = (int)nohtml($row["brg_dim_l"]);                                            
-                                            $dim_t = (int)nohtml($row["brg_dim_t"]);
-                                            
-                                            echo '<tr>';
-                                                echo '<td><button class="btn btn-primary">Pilih</button></td>';
-                                                echo '<td>'.$principal.'</td>';
-                                                echo '<td>'.$kode.'</td>';
-                                                echo '<td>'.$nama.'</td>';
-                                                echo '<td>'.$harga.'</td>';
-                                                echo '<td>'.$berat.'</td>';
-                                                echo '<td>'.$dim_p.'</td>';
-                                                echo '<td>'.$dim_l.'</td>';
-                                                echo '<td>'.$dim_t.'</td>';
-                                            echo '</tr>';
-                                        }
-                                    ?>
-                                    </tbody>
-                                </table>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p>Anda dapat menghitung biaya pengiriman berdasarkan informasi dimensi pada data barang yang anda cari.</p>
+                            <table id="grid_brg" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>&nbsp;</th>
+                                        <th>Principal</th>
+                                        <th>Kode Brg</th>
+                                        <th>Nama Brg</th>
+                                        <th>Harga (Rp)</th>
+                                        <th>Berat (Kg)</th>
+                                        <th>P</th>
+                                        <th>L</th>
+                                        <th>T</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                    $query = "SELECT p.principal_nama, b.brg_kode, b.brg_nama, b.brg_hrg, b.brg_berat, "
+                                            . "b.brg_dim_p, b.brg_dim_l, b.brg_dim_t FROM barang AS b "
+                                            . "INNER JOIN principal AS p ON b.principal_id = p.principal_id";
+                                    $results = $database->get_results( $query );
+                                    foreach( $results as $row )
+                                    {
+                                        $principal = nohtml($row["principal_nama"]);
+                                        $kode = nohtml($row["brg_kode"]);
+                                        $nama = nohtml($row["brg_nama"]);
+                                        $harga = format_IDR($row["brg_hrg"]);
+                                        $berat = $row["brg_berat"];
+                                        $dim_p = (int)nohtml($row["brg_dim_p"]);                                            
+                                        $dim_l = (int)nohtml($row["brg_dim_l"]);                                            
+                                        $dim_t = (int)nohtml($row["brg_dim_t"]);
+
+                                        echo '<tr>';
+                                            echo '<td><button class="btn btn-primary">Pilih</button></td>';
+                                            echo '<td>'.$principal.'</td>';
+                                            echo '<td>'.$kode.'</td>';
+                                            echo '<td>'.$nama.'</td>';
+                                            echo '<td>'.$harga.'</td>';
+                                            echo '<td>'.$berat.'</td>';
+                                            echo '<td>'.$dim_p.'</td>';
+                                            echo '<td>'.$dim_l.'</td>';
+                                            echo '<td>'.$dim_t.'</td>';
+                                        echo '</tr>';
+                                    }
+                                ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-9 mx-auto">
+                            <div class="card">
+                                <div class="card-header bg-warning">
+                                    <span class="text-white">Hitung Tarif Pengiriman</span>
+                                </div>
+                                <div class="card-body">
+                                    <form id="frm_calc_reg" class="form-horizontal" method="POST" action="#">
+                                        <div class="form-row">
+                                            <label class="col-md-2">Dimensi:</label>
+                                            <div class="form-group col-md-2">
+                                                <input type="text" name="fdim_p" id="fdim_p" class="form-control" placeholder="Panjang">
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <input type="text" name="fdim_l" id="fdim_l" class="form-control" placeholder="Lebar">
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <input type="text" name="fdim_t" id="fdim_t" class="form-control" placeholder="Tinggi">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <label class="col-md-2">Tujuan:</label>
+                                            <div class="form-group col-md-6">
+                                                <select name="ftujuan" id="ftujuan" class="form-control">
+                                                    <option value="">Pilih Tujuan</option>
+                                                    <?php
+                                                        $query = "SELECT * FROM kabupaten ORDER BY nama_kabupaten";
+                                                        $results = $database->get_results( $query );
+                                                        foreach( $results as $row )
+                                                        {
+                                                            $id = (int) nohtml($row["id_kabupaten"]);
+                                                            $nama = nohtml($row["nama_kabupaten"]);
+                                                            
+                                                            echo '<option value="'.$id.'">'.$nama.'</option>';
+                                                        }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <label class="col-md-2">Ekspedisi:</label>
+                                            <div class="form-group col-md-6">
+                                                <select name="fekspedisi" id="fekspedisi" class="form-control">
+                                                    <option value="">Pilih Ekspedisi</option>
+                                                    <?php
+                                                        $query = "SELECT * FROM ekspedisi ORDER BY ekspedisi_nama";
+                                                        $results = $database->get_results( $query );
+                                                        foreach( $results as $row )
+                                                        {
+                                                            $id = (int) nohtml($row["ekspedisi_id"]);
+                                                            $nama = nohtml($row["ekspedisi_nama"]);
+                                                            
+                                                            echo '<option value="'.$id.'">'.$nama.'</option>';
+                                                        }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-2 mx-auto">
+                                                <button class="btn btn-success">Tampilkan Tarif</button>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <table id="grid_tarif1" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Tujuan</th>
+                                                            <th>Ekspedisi</th>
+                                                            <th>Biaya Via Udara</th>
+                                                            <th>Biaya Via Darat</th>
+                                                            <th>Biaya Via Laut</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>AAA</td>
+                                                            <td>AAA</td>
+                                                            <td>AAA</td>
+                                                            <td>AAA</td>
+                                                            <td>AAA</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div> 
+                                <div class="card-footer">
+                                    Footer
+                                </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <div class="tab-pane container fade" id="unregistered">Unregistered</div>
             </div>
