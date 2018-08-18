@@ -36,6 +36,8 @@ if ($getact == "get_barang"){
 
 if ($getact == "get_tarif"){
     $data = array();
+    $fharga = (int) htmlspecialchars($_GET["fharga"], ENT_QUOTES, 'UTF-8');
+    $fberat = htmlspecialchars($_GET["fberat"], ENT_QUOTES, 'UTF-8');
     $fdim_p = (int) htmlspecialchars($_GET["fdim_p"], ENT_QUOTES, 'UTF-8');
     $fdim_l = (int) htmlspecialchars($_GET["fdim_l"], ENT_QUOTES, 'UTF-8');
     $fdim_t = (int) htmlspecialchars($_GET["fdim_t"], ENT_QUOTES, 'UTF-8');
@@ -69,12 +71,20 @@ if ($getact == "get_tarif"){
             $bdarat = (int) $r["biaya_via_darat"];
             $blaut = (int) $r["biaya_via_laut"];
             $volume = ($fdim_p * $fdim_l * $fdim_t)/6000;
-
+            $b_asuransi = round($fharga * 0.085);
+            $btotal_udara = round(($budara * $volume) + $b_asuransi);
+            $btotal_darat = round(($bdarat * $volume) + $b_asuransi);
+            $btotal_laut = round(($blaut * $volume) + $b_asuransi);
+            $btotal_udara_rp = format_IDR($btotal_udara);
+            $btotal_darat_rp = format_IDR($btotal_darat);
+            $btotal_laut_rp = format_IDR($btotal_laut);
+                    
             $row["ekspedisi"] = nohtml($r["ekspedisi_nama"]);
             $row["tujuan"] = nohtml($r["nama_kabupaten"]);
-            $row["via_udara"] = ($budara * $volume) + ($budara * 0.085);
-            $row["via_darat"] = ($bdarat * $volume) + ($bdarat * 0.085);
-            $row["via_laut"] = ($blaut * $volume) + ($blaut * 0.085);
+            $row["tarif_asuransi"] = $b_asuransi;
+            $row["via_udara"] = $btotal_udara;
+            $row["via_darat"] = $btotal_darat;
+            $row["via_laut"] = $btotal_laut;
 
             $data[] = $row;
         }
