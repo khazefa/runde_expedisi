@@ -52,6 +52,7 @@
             });
             
             logic_tarif1();
+            logic_tarif2();
         } );
     </script>
 
