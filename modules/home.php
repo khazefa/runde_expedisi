@@ -1,3 +1,14 @@
+    <section id="intro">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 mx-auto">
+            <h2>Welcome</h2>
+            <p class="lead">Aplikasi ini bertujuan untuk mempermudah dalam menghitung biaya kirim.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="calculate">
       <div class="container">
         <div class="row">
@@ -145,8 +156,9 @@
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="form-group col-md-2 mx-auto">
+                                            <div class="form-group col-md-6 mx-auto">
                                                 <button id="btn_tarif1" class="btn btn-success">Tampilkan Tarif</button>
+                                                <button id="btn_reset1" class="btn btn-danger">Reset</button>
                                             </div>
                                             <div class="form-group col-md-12">
                                                 <table id="grid_tarif1" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
@@ -177,6 +189,7 @@
                 <div class="tab-pane container fade" id="unregistered">
                     <div class="row">
                         <div class="col-lg-12">
+                            <p>Anda dapat menghitung biaya pengiriman berdasarkan informasi harga, berat dan informasi lainnya yang anda input.</p>
                             <div class="card">
                                 <div class="card-header bg-warning">
                                     <span class="text-white">Hitung Tarif Pengiriman</span>
@@ -246,8 +259,9 @@
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="form-group col-md-2 mx-auto">
+                                            <div class="form-group col-md-6 mx-auto">
                                                 <button id="btn_tarif2" class="btn btn-success">Tampilkan Tarif</button>
+                                                <button id="btn_reset2" class="btn btn-danger">Reset</button>
                                             </div>
                                             <div class="form-group col-md-12">
                                                 <table id="grid_tarif2" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
@@ -400,6 +414,18 @@
             e.preventDefault();
             table_tarif1.ajax.reload();
         });
+        
+        $("#btn_reset1").on("click", function(e){
+            e.preventDefault();
+            $('#fharga').val('');
+            $('#fberat').val('');
+            $('#fdim_p').val('');
+            $('#fdim_l').val('');
+            $('#fdim_t').val('');
+            $('#fekspedisi').val('');
+            $('#ftujuan').val('');
+            table_tarif1.ajax.reload();
+        });
     }
     
     function logic_tarif2(){
@@ -484,6 +510,18 @@
         $("#btn_tarif2").on("click", function(e){
             e.preventDefault();
             table_tarif2.ajax.reload();
-        });        
+        });
+        
+        $("#btn_reset2").on("click", function(e){
+            e.preventDefault();
+            $('#fharga2').val('');
+            $('#fberat2').val('');
+            $('#fdim_p2').val('');
+            $('#fdim_l2').val('');
+            $('#fdim_t2').val('');
+            $('#fekspedisi2').val('');
+            $('#ftujuan2').val('');
+            table_tarif2.ajax.reload();
+        });
     }
 </script>
