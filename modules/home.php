@@ -330,6 +330,11 @@
             $('#fdim_p').val(fp);
             $('#fdim_l').val(fl);
             $('#fdim_t').val(ft);
+            var ekspedisi = $('#fekspedisi').val();
+            var tujuan = $('#ftujuan').val();
+            if(!isEmpty(ekspedisi) && !isEmpty(tujuan)){
+                table_tarif1.ajax.reload();
+            }
         });
 
         var table_tarif1 = $('#grid_tarif1').DataTable({
